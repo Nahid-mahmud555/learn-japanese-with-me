@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiragana Master - Viral Vivid Yellow Edition</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Shippori+Mincho:wght@500;700;800&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- html2canvas for card downloads -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: {
+                            50: '#FDFBF7',
+                            100: '#FAF7F2',
+                            200: '#F4EEE5',
+                            300: '#E8DED1',
+                            400: '#D5C5B1',
+                            800: '#40382E',
+                            900: '#26211B',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        jp: ['"Shippori Mincho"', 'serif'],
+                        bn: ['"Hind Siliguri"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FAF7F2;
+            color: #26211B;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(254, 243, 199, 0.6) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(253, 230, 138, 0.4) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(253, 251, 247, 0.8) 0px, transparent 100%);
+            background-attachment: fixed;
+        }
+
+        .japanese-char {
+            font-family: 'Shippori Mincho', serif;
+        }
+
+        .bengali-font {
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #F4EEE5;
+            border-radius: 9999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #D5C5B1;
+            border-radius: 9999px;
+        }
+
+        /* 3D Card Flip Animation */
+        .card-perspective {
+            perspective: 1200px;
+        }
+        .card-inner {
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+        }
+        .card-perspective.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        .eye-pulse {
+            animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-300 selection:text-cream-900">
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-cream-900 text-cream-50 px-5 py-3 rounded-2xl shadow-2xl flex items-center space-x-3 transition-all duration-300 transform translate-y-10 opacity-0 pointer-events-none border border-cream-800">
+        <div id="toast-icon-bg" class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+            <i id="toast-icon" class="fas fa-check text-xs"></i>
+        </div>
+        <span id="toast-msg" class="text-xs sm:text-sm font-semibold">Notification message</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-cream-50/80 backdrop-blur-md border-b border-cream-300/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
+            
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-400 via-yellow-400 to-amber-500 p-0.5 shadow-md flex items-center justify-center">
+                    <div class="w-full h-full bg-cream-50 rounded-[14px] flex items-center justify-center text-amber-600 font-bold text-xl japanese-char">
+                        あ
+                    </div>
+                </div>
+                <div>
+                    <h1 class="text-lg sm:text-xl font-extrabold tracking-tight text-cream-900 leading-tight">
+                        Hiragana<span class="text-amber-600 font-normal">.studio</span>
+                    </h1>
+                    <p class="text-[11px] text-cream-800/70 font-medium hidden sm:block">Aesthetic Yellow Cards & Audio Pronunciation</p>
+                </div>
+            </div>
+
+            <!-- Global Action Controls -->
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <!-- Main Syllabary Type Selector -->
+                <div class="bg-cream-200/80 p-1 rounded-2xl flex text-xs font-bold border border-cream-300/60">
+                    <button id="tab-main" onclick="switchSyllabary('main')" class="px-3 py-1.5 rounded-xl transition-all bg-amber-400 text-amber-950 shadow-sm">Main</button>
+                    <button id="tab-dakuten" onclick="switchSyllabary('dakuten')" class="px-3 py-1.5 rounded-xl transition-all text-cream-800 hover:text-cream-900">Dakuten (゛/゜)</button>
+                </div>
+
+                <!-- Vision/Eye Study Mode Toggle -->
+                <button id="vision-toggle-btn" onclick="cycleVisionMode()" title="Toggle Study Reveal Mode" 
+                    class="px-3.5 py-2 rounded-2xl text-xs font-bold transition-all bg-cream-900 text-cream-50 hover:bg-cream-800 flex items-center space-x-2 shadow-md">
+                    <i id="vision-icon" class="fas fa-eye text-amber-400 eye-pulse"></i>
+                    <span id="vision-text" class="hidden sm:inline">Show All</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+
+        <!-- Hero Banner -->
+        <section class="mb-8">
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-amber-100/90 via-yellow-100/80 to-amber-200/60 border border-amber-300/80 p-6 sm:p-8 shadow-sm">
+                <!-- Background Japanese Watermark -->
+                <div class="absolute -right-8 -bottom-10 text-amber-300/30 text-9xl japanese-char font-extrabold select-none pointer-events-none">
+                    あいうえお
+                </div>
+
+                <div class="relative z-10 max-w-3xl">
+                    <div class="flex flex-wrap items-center gap-2 mb-3">
+                        <span class="px-3 py-1 rounded-full text-[11px] font-bold bg-amber-400/30 text-amber-900 border border-amber-400/50">
+                            ✨ Stylish Yellow Flashcard Studio
+                        </span>
+                        <span id="fav-count-badge" class="hidden px-3 py-1 rounded-full text-[11px] font-bold bg-amber-400/40 text-amber-950 border border-amber-500/30">
+                            <i class="fas fa-heart text-rose-500 mr-1"></i> <span id="fav-count">0</span> Saved
+                        </span>
+                    </div>
+                    
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-cream-900 tracking-tight leading-tight mb-2">
+                        Learn Hiragana with <span class="bg-gradient-to-r from-amber-600 via-orange-600 to-rose-600 bg-clip-text text-transparent">Vibrant & Colorful Letters</span>
+                    </h2>
+                    
+                    <p class="text-cream-800/80 text-xs sm:text-sm leading-relaxed mb-6 font-medium max-w-2xl">
+                        প্রত্যেকটা কার্ড স্টাইলিশ হলুদ রঙের এবং প্রতিটা জাপানি হরফ আলাদা আলাদা আকর্ষণীয় কালারে তৈরি! শোনার জন্য স্পিকার বাটনে ক্লিক করুন এবং কার্ড পিকচার হিসেবে ডাউনলোড করুন।
+                    </p>
+
+                    <!-- Search & Filter Controls -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        <div class="relative flex-grow">
+                            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-amber-600/60 text-sm"></i>
+                            <input type="text" id="search-input" placeholder="Search Romaji (e.g. 'ka'), Bengali ('কা'), or Character..." 
+                                class="w-full pl-11 pr-10 py-3 rounded-2xl bg-white/95 border border-amber-300 text-cream-900 placeholder-amber-700/50 focus:outline-none focus:ring-2 focus:ring-amber-400 shadow-sm text-xs sm:text-sm font-medium transition-all">
+                            <button id="clear-search" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-cream-400 hover:text-cream-800 p-1">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Favorites Filter Button -->
+                        <button id="fav-filter-btn" onclick="toggleFavFilter()" class="px-4 py-3 rounded-2xl bg-white border border-amber-300 text-cream-800 hover:bg-amber-50 font-bold text-xs sm:text-sm flex items-center justify-center space-x-2 transition-all shadow-sm">
+                            <i class="far fa-heart text-rose-500" id="fav-filter-icon"></i>
+                            <span id="fav-filter-text">Favorites</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Column Filters Tabs -->
+        <section class="mb-8">
+            <div class="flex items-center space-x-2 overflow-x-auto pb-2 custom-scrollbar" id="row-filters">
+                <!-- Dynamically populated filter buttons -->
+            </div>
+        </section>
+
+        <!-- Cards Display Container -->
+        <section id="cards-container" class="space-y-10">
+            <!-- Dynamically populated cards -->
+        </section>
+
+        <!-- Empty State -->
+        <div id="no-results" class="hidden py-16 text-center">
+            <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-3xl flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner">
+                <i class="fas fa-ghost"></i>
+            </div>
+            <h3 class="text-base font-bold text-cream-900 mb-1">No Hiragana characters found</h3>
+            <p class="text-xs text-cream-800/60">Try clearing your search or picking a different filter column.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-cream-100/80 border-t border-cream-300/60 py-6 text-center text-xs text-cream-800/60 font-medium">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <p>Crafted with ✨ for Japanese learners • Vivid Yellow Edition</p>
+            <p class="text-[11px] text-cream-400">Click cards to flip • Sound & High-Res PNG Download</p>
+        </div>
+    </footer>
+
+    <!-- Offscreen Container for Export Rendering -->
+    <div id="offscreen-download-container" class="fixed -left-[9999px] top-0 pointer-events-none"></div>
+
+    <!-- Application Script Engine -->
+    <script>
+        // Main Hiragana Dataset
+        const datasetMain = [
+            {
+                rowId: "vowels",
+                rowName: "Vowels (あ行)",
+                badgeColor: "bg-amber-500/20 text-amber-900 border-amber-300",
+                gradient: "from-amber-200 via-yellow-100 to-amber-300/70",
+                accentHex: "#D97706",
+                items: [
+                    { char: "あ", romaji: "a", bn: "আ (Aa)", sound: "Ah (like 'father')", sample: "朝", sampleRomaji: "asa", sampleMeaning: "Morning", charColor: "text-rose-600", charHex: "#E11D48" },
+                    { char: "い", romaji: "i", bn: "ই (Ee)", sound: "Ee (like 'feet')", sample: "犬", sampleRomaji: "inu", sampleMeaning: "Dog", charColor: "text-indigo-600", charHex: "#4F46E5" },
+                    { char: "う", romaji: "u", bn: "উ (Oo)", sound: "Oo (like 'boot')", sample: "海", sampleRomaji: "umi", sampleMeaning: "Sea", charColor: "text-emerald-600", charHex: "#059669" },
+                    { char: "え", romaji: "e", bn: "এ (Eh)", sound: "Eh (like 'pet')", sample: "駅", sampleRomaji: "eki", sampleMeaning: "Station", charColor: "text-purple-600", charHex: "#9333EA" },
+                    { char: "お", romaji: "o", bn: "ও (Oh)", sound: "Oh (like 'go')", sample: "折り紙", sampleRomaji: "origami", sampleMeaning: "Origami", charColor: "text-orange-600", charHex: "#EA580C" }
+                ]
+            },
+            {
+                rowId: "k-row",
+                rowName: "K-Row (か行)",
+                badgeColor: "bg-amber-500/20 text-amber-900 border-amber-300",
+                gradient: "from-amber-200 via-yellow-100 to-amber-300/70",
+                accentHex: "#D97706",
+                items: [
+                    { char: "か", romaji: "ka", bn: "কা (Ka)", sound: "Ka (like 'car')", sample: "川", sampleRomaji: "kawa", sampleMeaning: "River", charColor: "text-teal-600", charHex: "#0D9488" },
+                    { char: "き", romaji: "ki", bn: "কি (Ki)", sound: "Key (like 'key')", sample: "木", sampleRomaji: "ki", sampleMeaning: "Tree", charColor: "text-blue-600", charHex: "#2563EB" },
+                    { char: "く", romaji: "ku", bn: "কু (Ku)", sound: "Koo (like 'cuckoo')", sample: "車", sampleRomaji: "kuruma", sampleMeaning: "Car", charColor: "text-pink-600", charHex: "#DB2777" },
+                    { char: "け", romaji: "ke", bn: "কে (Ke)", sound: "Keh (like 'kettle')", sample: "池", sampleRomaji: "ike", sampleMeaning: "Pond", charColor: "text-cyan-600", charHex: "#0891B2" },
+                    { char: "こ", romaji: "ko", bn: "কো (Ko)", sound: "Koh (like 'cone')", sample: "声", sampleRomaji: "koe", sampleMeaning: "Voice", charColor: "text-red-600", charHex: "#DC2626" }
+                ]
+            },
+            {
+                rowId: "s-row",
+                rowName: "S-Row (さ行)",
+                badgeColor: "bg-amber-500/20 text-amber-900 border-amber-300",
+                gradient: "from-amber-200 via-yellow-100 to-amber-300/70",
+                accentHex: "#D97706",
+                items: [
+                    { char: "さ", romaji: "sa", bn: "সা (Sa)", sound: "Sah (like 'saw')", sample: "魚", sampleRomaji: "sakana", sampleMeaning: "Fish", charColor: "text-violet-600", charHex: "#7C3AED" },
+                    { char: "し", romaji: "shi", bn: "শি (Shi)", sound: "She (like 'she')", sample: "白", sampleRomaji: "shiro", sampleMeaning: "White", charColor: "text-sky-600", charHex: "#0284C7" },
+                    { char: "す", romaji: "su", bn: "সু (Su)", sound: "Sue (like 'sue')", sample: "寿司", sampleRomaji: "sushi", sampleMeaning: "Sushi", charColor: "text-emerald-700", charHex: "#047857" },
+                    { char: "せ", romaji: "se", bn: "সে (Se)", sound: "Seh (like 'set')", sample: "世界", sampleRomaji: "sekai", sampleMeaning: "World", charColor: "text-fuchsia-600", charHex: "#C026D3" },
+                    { char: "そ", romaji: "so", bn: "সো (So)", sound: "Soh (like 'soap')", sample: "空", sampleRomaji: "sora", sampleMeaning: "Sky", charColor: "text-rose-700", charHex: "#BE123C" }
+                ]
+            },
+            {
+                rowId: "t-row",
+                rowName: "T-Row (た行)",
+                badgeColor: "bg-amber-500/20 text-amber-900 border-amber-300",
+                gradient: "from-amber-200 via-yellow-100 to-amber-300/70",
+                accentHex: "#D97706",
+                items: [
+                    { char: "た", romaji: "ta", bn: "তা (Ta)", sound: "Tah (like 'top')", sample: "卵", sampleRomaji: "tamago", sampleMeaning: "Egg", charColor: "text-blue-700", charHex: "#1D4ED8" },
+                    { char: "ち", romaji: "chi", bn: "চি (Chi)", sound: "Chee (like 'cheese')", sample: "地下", sampleRomaji: "chika", sampleMeaning: "Underground", charColor: "text-pink-700", charHex: "#BE185D" },
+                    { char: "つ", romaji: "tsu", bn: "ত্সু (Tsu)", sound: "Tsoo (like 'tsunami')", sample: "月", sampleRomaji: "tsuki", sampleMeaning: "Moon", charColor: "text-indigo-700", charHex: "#4338CA" },
+                    { char: "て", romaji: "te", bn: "তে (Te)", sound: "Teh (like 'ten')", sample: "手", sampleRomaji: "te", sampleMeaning: "Hand", charColor: "text-teal-700", charHex: "#0F766E" },
+                    { char: "と", romaji: "to", bn: "তো (To)", sound: "Toh (like 'toe')", sample: "鳥", sampleRomaji: "tori", sampleMeaning: "Bird", charColor: "text-purple-700", charHex: "#7E22CE" }
+                ]
+            },
+            {
+                rowId: "n-row",
+                rowName: "N-Row (な行)",
+                badgeColor: "bg-amber-500/20 text-amber-900 border-amber-300",
+                gradient: "from-amber-200 via-yellow-100 to-amber-300/70",
+                accentHex: "#D97706",
+                items: [
+                    { char: "な", romaji: "na", bn: "না (Na)", sound: "Nah (like 'nut')", sample: "夏", sampleRomaji: "natsu", sampleMeaning: "Summer", charColor: "text-red-700", charHex: "#B91C1C" },
+                    { char: "に", romaji: "ni", bn: "নি (Ni)", sound: "Knee (like 'knee')", sample: "肉", sampleRomaji: "niku", sampleMeaning: "Meat", charColor: "text-cyan-700", charHex: "#0E7490" },
+                    { char: "ぬ", romaji: "nu", bn: "নু (Nu)", sound: "Noo (like 'noodle')", sample: "沼", sampleRomaji: "numa", sampleMeaning: "Swamp", charColor: "text-violet-700", charHex: "#6D28D9" },
+                    { char: "ね", romaji: "ne", bn: "নে (Ne)", sound: "Neh (like 'nest')", sample: "猫", sampleRomaji: "neko", sampleMeaning: "Cat", charColor: "text-emerald-800", charHex: "#065F46" },
+                    { char: "の", romaji: "no", bn: "নো (No)", sound: "Noh (like 'no')", sample: "海苔", sampleRomaji: "nori", sampleMeaning: "Seaweed", charColor: "text-amber-800", charHex: "#92400E" }
+                ]
+            },
+            {
+                rowId: "h-row",
+                rowName: "H-Row (は行)",
+                badgeColor: "bg-amber-500/20 text-amber-900 border-amber-300",
+                gradient: "from-amber-200 via-yellow-100 to-amber-300/70",
+                accentHex: "#D97706",
+                items: [
+                    { char: "は", romaji: "ha", bn: "হা (Ha)", sound: "Ha (like 'ha-ha')", sample: "花", sampleRomaji: "hana", sampleMeaning: "Flower", charColor: "text-rose-600", charHex: "#E11D48" },
+                    { char: "ひ", romaji: "hi", bn: "হি (Hi)", sound: "Hee (like 'he')", sample: "光", sampleRomaji: "hikari", sampleMeaning: "Light", charColor: "text-blue-600", charHex: "#2563EB" },
+                    { char: "ふ", romaji: "fu", bn: "ফু (Fu)", sound: "Foo (soft hu/fu)", sample: "船", sampleRomaji: "fune", sampleMeaning: "Ship", charColor: "text-fuchsia-600", charHex: "#C026D3" },
+                    { char: "へ", romaji: "he", bn: "হে (He)", sound: "Heh (like 'help')", sample: "部屋", sampleRomaji: "heya", sampleMeaning: "Room", charColor: "text-teal-600", charHex: "#0D9488" },
+                    { char: "ほ", romaji: "ho", bn: "হো (Ho)", sound: "Hoh (like 'hope')", sample: "星", sampleRomaji: "hoshi", sampleMeaning: "Star", charColor: "text-indigo-600", charHex: "#4F46E5" }
+                ]
+            },
+            {
+                rowId: "m-row",
+                rowName: "M-Row (ま行)",
+                badgeColor: "bg-amber-500/20 text-amber-900 border-amber-300",
+                gradient: "from-amber-200 via-yellow-100 to-amber-300/70",
+                accentHex: "#D97706",
+                items: [
+                    { char: "ま", romaji: "ma", bn: "মা (Ma)", sound: "Mah (like 'mama')", sample: "町", sampleRomaji: "machi", sampleMeaning: "Town", charColor: "text-pink-600", charHex: "#DB2777" },
+                    { char: "み", romaji: "mi", bn: "মি (Mi)", sound: "Mee (like 'me')", sample: "水", sampleRomaji: "mizu", sampleMeaning: "Water", charColor: "text-sky-600", charHex: "#0284C7" },
+                    { char: "む", romaji: "mu", bn: "মু (Mu)", sound: "Moo (like 'moon')", sample: "虫", sampleRomaji: "mushi", sampleMeaning: "Insect", charColor: "text-purple-600", charHex: "#9333EA" },
+                    { char: "め", romaji: "me", bn: "মে (Me)", sound: "Meh (like 'met')", sample: "目", sampleRomaji: "me", sampleMeaning: "Eye", charColor: "text-emerald-600", charHex: "#059669" },
+                    { char: "も", romaji: "mo", bn: "মো (Mo)", sound: "Moh (like 'more')", sample: "桃", sampleRomaji: "momo", sampleMeaning: "Peach", charColor: "text-orange-600", charHex: "#EA580C" }
+                ]
+            },
+            {
+                rowId: "y-row",
+                rowName: "Y-Row (や行)",
+                badgeColor: "bg-amber-500/20 text-amber-900 border-amber-300",
+                gradient: "from-amber-200 via-yellow-100 to-amber-300/70",
+                accentHex: "#D97706",
+                items: [
+                    { char: "や", romaji: "ya", bn: "য়া (Ya)", sound: "Yah (like 'yard')", sample: "山", sampleRomaji: "yama", sampleMeaning: "Mountain", charColor: "text-indigo-700", charHex: "#4338CA" },
+                    { char: "ゆ", romaji: "yu", bn: "য়ু (Yu)", sound: "Yoo (like 'you')", sample: "雪", sampleRomaji: "yuki", sampleMeaning: "Snow", charColor: "text-teal-700", charHex: "#0F766E" },
+                    { char: "よ", romaji: "yo", bn: "য়ো (Yo)", sound: "Yoh (like 'yodel')", sample: "夜", sampleRomaji: "yoru", sampleMeaning: "Night", charColor: "text-rose-700", charHex: "#BE123C" }
+                ]
+            },
+            {
+                rowId: "r-row",
+                rowName: "R-Row (ら行)",
+                badgeColor: "bg-amber-500/20 text-amber-900 border-amber-300",
+                gradient: "from-amber-200 via-yellow-100 to-amber-300/70",
+                accentHex: "#D97706",
+                items: [
+                    { char: "ら", romaji: "ra", bn: "রা (Ra)", sound: "Rah (light rolled r)", sample: "桜", sampleRomaji: "sakura", sampleMeaning: "Cherry Blossom", charColor: "text-pink-600", charHex: "#DB2777" },
+                    { char: "り", romaji: "ri", bn: "রি (Ri)", sound: "Ree (like 'reed')", sample: "りんご", sampleRomaji: "ringo", sampleMeaning: "Apple", charColor: "text-red-600", charHex: "#DC2626" },
+                    { char: "る", romaji: "ru", bn: "রু (Ru)", sound: "Roo (like 'ruby')", sample: "留守", sampleRomaji: "rusu", sampleMeaning: "Absence", charColor: "text-violet-600", charHex: "#7C3AED" },
+                    { char: "れ", romaji: "re", bn: "রে (Re)", sound: "Reh (like 'red')", sample: "歴史", sampleRomaji: "rekishi", sampleMeaning: "History", charColor: "text-blue-600", charHex: "#2563EB" },
+                    { char: "ろ", romaji: "ro", bn: "রো (Ro)", sound: "Roh (like 'rope')", sample: "六", sampleRomaji: "roku", sampleMeaning: "Six", charColor: "text-cyan-700", charHex: "#0E7490" }
+                ]
+            },
+            {
+                rowId: "w-row",
+                rowName: "W-Row & N (わ行・ん)",
+                badgeColor: "bg-amber-500/20 text-amber-900 border-amber-300",
+                gradient: "from-amber-200 via-yellow-100 to-amber-300/70",
+                accentHex: "#D97706",
+                items: [
+                    { char: "わ", romaji: "wa", bn: "ওয়া (Wa)", sound: "Wah (like 'water')", sample: "川", sampleRomaji: "kawa", sampleMeaning: "River", charColor: "text-emerald-600", charHex: "#059669" },
+                    { char: "を", romaji: "wo", bn: "ও/ও (Wo)", sound: "Oh/Wo (Object Particle)", sample: "本を", sampleRomaji: "hon o", sampleMeaning: "Book (obj)", charColor: "text-purple-600", charHex: "#9333EA" },
+                    { char: "ん", romaji: "n", bn: "ন্/ং (N)", sound: "N (Nasal sound)", sample: "本", sampleRomaji: "hon", sampleMeaning: "Book", charColor: "text-rose-600", charHex: "#E11D48" }
+                ]
+            }
+        ];
+
+        const datasetDakuten = [
+            {
+                rowId: "g-row",
+                rowName: "G-Row (が行)",
+                badgeColor: "bg-amber-600/20 text-amber-900 border-amber-300",
+                gradient: "from-yellow-200 via-amber-100 to-yellow-300/80",
+                accentHex: "#B45309",
+                items: [
+                    { char: "が", romaji: "ga", bn: "গা (Ga)", sound: "Ga (like 'garlic')", sample: "学校", sampleRomaji: "gakkou", sampleMeaning: "School", charColor: "text-teal-700", charHex: "#0F766E" },
+                    { char: "ぎ", romaji: "gi", bn: "গি (Gi)", sound: "Gee (like 'geese')", sample: "銀行", sampleRomaji: "ginkou", sampleMeaning: "Bank", charColor: "text-indigo-600", charHex: "#4F46E5" },
+                    { char: "ぐ", romaji: "gu", bn: "গু (Gu)", sound: "Goo (like 'goose')", sample: "軍手", sampleRomaji: "gunte", sampleMeaning: "Gloves", charColor: "text-rose-600", charHex: "#E11D48" },
+                    { char: "げ", romaji: "ge", bn: "গে (Ge)", sound: "Geh (like 'get')", sample: "ゲーム", sampleRomaji: "geemu", sampleMeaning: "Game", charColor: "text-purple-600", charHex: "#9333EA" },
+                    { char: "ご", romaji: "go", bn: "গো (Go)", sound: "Goh (like 'gold')", sample: "ご飯", sampleRomaji: "gohan", sampleMeaning: "Rice/Meal", charColor: "text-amber-700", charHex: "#B45309" }
+                ]
+            },
+            {
+                rowId: "z-row",
+                rowName: "Z-Row (ざ行)",
+                badgeColor: "bg-amber-600/20 text-amber-900 border-amber-300",
+                gradient: "from-yellow-200 via-amber-100 to-yellow-300/80",
+                accentHex: "#B45309",
+                items: [
+                    { char: "ざ", romaji: "za", bn: "জা (Za)", sound: "Zah (like 'zamboni')", sample: "雑誌", sampleRomaji: "zasshi", sampleMeaning: "Magazine", charColor: "text-violet-600", charHex: "#7C3AED" },
+                    { char: "じ", romaji: "ji", bn: "জি (Ji)", sound: "Jee (like 'jeep')", sample: "時間", sampleRomaji: "jikan", sampleMeaning: "Time", charColor: "text-blue-600", charHex: "#2563EB" },
+                    { char: "ず", romaji: "zu", bn: "জু (Zu)", sound: "Zoo (like 'zoo')", sample: "図鑑", sampleRomaji: "zukan", sampleMeaning: "Field guide", charColor: "text-emerald-600", charHex: "#059669" },
+                    { char: "ぜ", romaji: "ze", bn: "জে (Ze)", sound: "Zeh (like 'zest')", sample: "全部", sampleRomaji: "zenbu", sampleMeaning: "All", charColor: "text-pink-600", charHex: "#DB2777" },
+                    { char: "ぞ", romaji: "zo", bn: "জো (Zo)", sound: "Zoh (like 'zombie')", sample: "象", sampleRomaji: "zou", sampleMeaning: "Elephant", charColor: "text-cyan-600", charHex: "#0891B2" }
+                ]
+            },
+            {
+                rowId: "d-row",
+                rowName: "D-Row (だ行)",
+                badgeColor: "bg-amber-600/20 text-amber-900 border-amber-300",
+                gradient: "from-yellow-200 via-amber-100 to-yellow-300/80",
+                accentHex: "#B45309",
+                items: [
+                    { char: "だ", romaji: "da", bn: "দা (Da)", sound: "Dah (like 'dark')", sample: "大学", sampleRomaji: "daigaku", sampleMeaning: "University", charColor: "text-red-600", charHex: "#DC2626" },
+                    { char: "ぢ", romaji: "ji", bn: "জি (Ji)", sound: "Jee (rare, same as じ)", sample: "鼻血", sampleRomaji: "hanaji", sampleMeaning: "Nosebleed", charColor: "text-indigo-700", charHex: "#4338CA" },
+                    { char: "づ", romaji: "zu", bn: "জু (Zu)", sound: "Zoo (rare, same as ず)", sample: "三日月", sampleRomaji: "mikazuki", sampleMeaning: "Crescent moon", charColor: "text-teal-700", charHex: "#0F766E" },
+                    { char: "で", romaji: "de", bn: "দে (De)", sound: "Deh (like 'desk')", sample: "電気", sampleRomaji: "denki", sampleMeaning: "Electricity", charColor: "text-fuchsia-600", charHex: "#C026D3" },
+                    { char: "ど", romaji: "do", bn: "দো (Do)", sound: "Doh (like 'door')", sample: "ドア", sampleRomaji: "doa", sampleMeaning: "Door", charColor: "text-sky-600", charHex: "#0284C7" }
+                ]
+            },
+            {
+                rowId: "b-row",
+                rowName: "B-Row (ば行)",
+                badgeColor: "bg-amber-600/20 text-amber-900 border-amber-300",
+                gradient: "from-yellow-200 via-amber-100 to-yellow-300/80",
+                accentHex: "#B45309",
+                items: [
+                    { char: "ば", romaji: "ba", bn: "বা (Ba)", sound: "Bah (like 'bar')", sample: "バス", sampleRomaji: "basu", sampleMeaning: "Bus", charColor: "text-emerald-700", charHex: "#047857" },
+                    { char: "び", romaji: "bi", bn: "বি (Bi)", sound: "Bee (like 'bee')", sample: "美術館", sampleRomaji: "bijutsukan", sampleMeaning: "Museum", charColor: "text-rose-600", charHex: "#E11D48" },
+                    { char: "ぶ", romaji: "bu", bn: "বু (Bu)", sound: "Boo (like 'boot')", sample: "豚", sampleRomaji: "buta", sampleMeaning: "Pig", charColor: "text-purple-700", charHex: "#7E22CE" },
+                    { char: "べ", romaji: "be", bn: "বে (Be)", sound: "Beh (like 'bell')", sample: "勉強", sampleRomaji: "benkyou", sampleMeaning: "Study", charColor: "text-blue-700", charHex: "#1D4ED8" },
+                    { char: "ぼ", romaji: "bo", bn: "বো (Bo)", sound: "Boh (like 'boat')", sample: "帽子", sampleRomaji: "boushi", sampleMeaning: "Hat", charColor: "text-orange-600", charHex: "#EA580C" }
+                ]
+            },
+            {
+                rowId: "p-row",
+                rowName: "P-Row (ぱ行)",
+                badgeColor: "bg-amber-600/20 text-amber-900 border-amber-300",
+                gradient: "from-yellow-200 via-amber-100 to-yellow-300/80",
+                accentHex: "#B45309",
+                items: [
+                    { char: "ぱ", romaji: "pa", bn: "পা (Pa)", sound: "Pah (like 'park')", sample: "パン", sampleRomaji: "pan", sampleMeaning: "Bread", charColor: "text-pink-600", charHex: "#DB2777" },
+                    { char: "ぴ", romaji: "pi", bn: "পি (Pi)", sound: "Pee (like 'peak')", sample: "ピアノ", sampleRomaji: "piano", sampleMeaning: "Piano", charColor: "text-violet-600", charHex: "#7C3AED" },
+                    { char: "ぷ", romaji: "pu", bn: "পু (Pu)", sound: "Poo (like 'pool')", sample: "プール", sampleRomaji: "puuru", sampleMeaning: "Pool", charColor: "text-cyan-600", charHex: "#0891B2" },
+                    { char: "ぺ", romaji: "pe", bn: "পে (Pe)", sound: "Peh (like 'pen')", sample: "ペン", sampleRomaji: "pen", sampleMeaning: "Pen", charColor: "text-teal-600", charHex: "#0D9488" },
+                    { char: "ぽ", romaji: "po", bn: "পো (Po)", sound: "Poh (like 'poke')", sample: "ポスト", sampleRomaji: "posuto", sampleMeaning: "Postbox", charColor: "text-rose-700", charHex: "#BE123C" }
+                ]
+            }
+        ];
+
+        // App State
+        let currentMode = 'main'; // 'main' or 'dakuten'
+        let selectedFilter = 'all';
+        let searchQuery = '';
+        let favorites = JSON.parse(localStorage.getItem('hiragana_favs') || '[]');
+        let onlyFavs = false;
+        let visionMode = 0; // 0: Show All, 1: Hide Romaji/Bengali, 2: Hide Character
+
+        // Sound Audio Effects Engine (Web Audio API Synth)
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playUiSound(type = 'click') {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.08);
+            } else if (type === 'flip') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(320, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.12);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.12);
+            } else if (type === 'fav') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.06); // E5
+                osc.frequency.exponentialRampToValueAtTime(783.99, audioCtx.currentTime + 0.12); // G5
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.16);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.16);
+            }
+        }
+
+        // Japanese Speech Synthesis
+        function speakJapanese(text) {
+            playUiSound('click');
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Stop current speech
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ja-JP';
+                utterance.rate = 0.85; // Slightly slower for clarity
+                window.speechSynthesis.speak(utterance);
+            } else {
+                showToast("Voice not supported on this browser", "error");
+            }
+        }
+
+        // Toast Notification System
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-msg');
+            const toastIconBg = document.getElementById('toast-icon-bg');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastMsg.innerText = msg;
+            if (type === 'success') {
+                toastIconBg.className = 'w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center';
+                toastIcon.className = 'fas fa-check text-xs';
+            } else {
+                toastIconBg.className = 'w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center';
+                toastIcon.className = 'fas fa-info text-xs';
+            }
+
+            toast.classList.remove('translate-y-10', 'opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('translate-y-10', 'opacity-0', 'pointer-events-none');
+            }, 2500);
+        }
+
+        // Toggle Favorites
+        function toggleFavorite(char, event) {
+            if(event) event.stopPropagation();
+            playUiSound('fav');
+            
+            if (favorites.includes(char)) {
+                favorites = favorites.filter(c => c !== char);
+                showToast(`Removed '${char}' from favorites`, 'info');
+            } else {
+                favorites.push(char);
+                showToast(`Saved '${char}' to favorites!`, 'success');
+            }
+            
+            localStorage.setItem('hiragana_favs', JSON.stringify(favorites));
+            updateFavBadges();
+            render();
+        }
+
+        function updateFavBadges() {
+            const badge = document.getElementById('fav-count-badge');
+            const count = document.getElementById('fav-count');
+            count.innerText = favorites.length;
+            if (favorites.length > 0) {
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function toggleFavFilter() {
+            playUiSound('click');
+            onlyFavs = !onlyFavs;
+            const btn = document.getElementById('fav-filter-btn');
+            const icon = document.getElementById('fav-filter-icon');
+            
+            if (onlyFavs) {
+                btn.classList.add('bg-rose-500', 'text-white', 'border-rose-600');
+                btn.classList.remove('bg-white', 'text-cream-800', 'border-cream-300');
+                icon.className = 'fas fa-heart text-white';
+            } else {
+                btn.classList.remove('bg-rose-500', 'text-white', 'border-rose-600');
+                btn.classList.add('bg-white', 'text-cream-800', 'border-cream-300');
+                icon.className = 'far fa-heart text-rose-500';
+            }
+            render();
+        }
+
+        // Syllabary Switcher (Main vs Dakuten)
+        function switchSyllabary(type) {
+            playUiSound('click');
+            currentMode = type;
+            selectedFilter = 'all';
+
+            const tabMain = document.getElementById('tab-main');
+            const tabDakuten = document.getElementById('tab-dakuten');
+
+            if (type === 'main') {
+                tabMain.className = "px-3 py-1.5 rounded-xl transition-all bg-amber-400 text-amber-950 shadow-sm font-bold";
+                tabDakuten.className = "px-3 py-1.5 rounded-xl transition-all text-cream-800 hover:text-cream-900 font-bold";
+            } else {
+                tabDakuten.className = "px-3 py-1.5 rounded-xl transition-all bg-amber-400 text-amber-950 shadow-sm font-bold";
+                tabMain.className = "px-3 py-1.5 rounded-xl transition-all text-cream-800 hover:text-cream-900 font-bold font-bold";
+            }
+
+            renderFilterTabs();
+            render();
+        }
+
+        // Vision / Study Reveal Mode Toggle
+        function cycleVisionMode() {
+            playUiSound('click');
+            visionMode = (visionMode + 1) % 3;
+            const icon = document.getElementById('vision-icon');
+            const text = document.getElementById('vision-text');
+
+            if (visionMode === 0) {
+                icon.className = "fas fa-eye text-amber-400 eye-pulse";
+                text.innerText = "Show All";
+                showToast("Normal Mode: All Hiragana details visible", "info");
+            } else if (visionMode === 1) {
+                icon.className = "fas fa-eye-slash text-rose-400";
+                text.innerText = "Hide Romaji";
+                showToast("Quiz Mode: Romaji & Bengali hidden", "info");
+            } else {
+                icon.className = "fas fa-low-vision text-purple-400";
+                text.innerText = "Hide Character";
+                showToast("Recall Mode: Hiragana character hidden", "info");
+            }
+            render();
+        }
+
+        // Render Filter Tabs
+        function renderFilterTabs() {
+            const container = document.getElementById('row-filters');
+            const dataset = currentMode === 'main' ? datasetMain : datasetDakuten;
+
+            let html = `
+                <button onclick="setFilter('all')" class="px-4 py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition-all ${selectedFilter === 'all' ? 'bg-amber-500 text-amber-950 shadow-md ring-2 ring-amber-400/50' : 'bg-white border border-amber-300 text-cream-800 hover:bg-amber-50'}">
+                    ✨ All Columns
+                </button>
+            `;
+
+            dataset.forEach(row => {
+                const isActive = selectedFilter === row.rowId;
+                html += `
+                    <button onclick="setFilter('${row.rowId}')" class="px-4 py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition-all ${isActive ? 'bg-amber-500 text-amber-950 shadow-md ring-2 ring-amber-400/50' : 'bg-white border border-amber-300 text-cream-800 hover:bg-amber-50'}">
+                        ${row.rowName}
+                    </button>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function setFilter(rowId) {
+            playUiSound('click');
+            selectedFilter = rowId;
+            renderFilterTabs();
+            render();
+        }
+
+        // Card Flip Handling
+        function flipCard(cardEl) {
+            playUiSound('flip');
+            cardEl.classList.toggle('flipped');
+        }
+
+        // High Quality PNG Download Card Generator
+        function downloadCardImage(charObj, event) {
+            if(event) event.stopPropagation();
+            playUiSound('click');
+            showToast(`Generating PNG for '${charObj.char}'...`, 'info');
+
+            const offscreen = document.getElementById('offscreen-download-container');
+            
+            // Build rich styled temporary element for html2canvas
+            offscreen.innerHTML = `
+                <div id="export-card" style="width: 400px; height: 500px; background: linear-gradient(135deg, #FFF9D2 0%, #FFE79A 100%); border-radius: 36px; padding: 32px; font-family: 'Plus Jakarta Sans', sans-serif; display: flex; flex-direction: column; justify-between: space-between; border: 8px solid #FCD34D; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 14px; font-weight: 800; color: #78350F; background: rgba(251, 191, 36, 0.4); padding: 6px 14px; border-radius: 20px;">Hiragana.studio</span>
+                        <span style="font-size: 20px; font-weight: 800; color: #78350F;">${charObj.romaji.toUpperCase()}</span>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
+                        <div style="font-family: 'Shippori Mincho', serif; font-size: 120px; font-weight: 800; color: ${charObj.charHex}; line-height: 1;">
+                            ${charObj.char}
+                        </div>
+                        <div style="font-family: 'Hind Siliguri', sans-serif; font-size: 26px; font-weight: 700; color: #78350F; margin-top: 8px;">
+                            ${charObj.bn}
+                        </div>
+                        <div style="font-size: 14px; color: #92400E; font-weight: 600; margin-top: 4px;">
+                            Sound: "${charObj.sound}"
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(255, 255, 255, 0.8); border-radius: 24px; padding: 16px; border: 2px solid #FDE68A;">
+                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #78350F; font-weight: 800;">Example Word</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                            <div>
+                                <span style="font-family: 'Shippori Mincho', serif; font-size: 22px; font-weight: 700; color: #1F2937;">${charObj.sample}</span>
+                                <span style="font-size: 14px; font-weight: 600; color: #4B5563; margin-left: 8px;">(${charObj.sampleRomaji})</span>
+                            </div>
+                            <span style="font-size: 14px; font-weight: 700; color: #059669; background: #D1FAE5; padding: 4px 10px; border-radius: 12px;">${charObj.sampleMeaning}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            setTimeout(() => {
+                const exportEl = document.getElementById('export-card');
+                html2canvas(exportEl, {
+                    scale: 2,
+                    backgroundColor: null,
+                    useCORS: true
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `Hiragana-${charObj.char}-${charObj.romaji}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                    offscreen.innerHTML = '';
+                    showToast(`Card for '${charObj.char}' downloaded!`, 'success');
+                }).catch(err => {
+                    console.error("Canvas error:", err);
+                    showToast("Download failed. Try again.", "error");
+                });
+            }, 100);
+        }
+
+        // Render Cards Matrix
+        function render() {
+            const container = document.getElementById('cards-container');
+            const noResults = document.getElementById('no-results');
+            const dataset = currentMode === 'main' ? datasetMain : datasetDakuten;
+
+            let totalMatches = 0;
+            let html = '';
+
+            dataset.forEach(row => {
+                // Apply Column Filter
+                if (selectedFilter !== 'all' && selectedFilter !== row.rowId) return;
+
+                // Filter Items inside Row
+                const matchingItems = row.items.filter(item => {
+                    // Favorites filter
+                    if (onlyFavs && !favorites.includes(item.char)) return false;
+
+                    // Search Query filter
+                    if (searchQuery.trim() !== '') {
+                        const q = searchQuery.toLowerCase().trim();
+                        const matchChar = item.char.includes(q);
+                        const matchRomaji = item.romaji.toLowerCase().includes(q);
+                        const matchBn = item.bn.toLowerCase().includes(q);
+                        const matchSample = item.sample.includes(q) || item.sampleRomaji.toLowerCase().includes(q) || item.sampleMeaning.toLowerCase().includes(q);
+                        return matchChar || matchRomaji || matchBn || matchSample;
+                    }
+                    return true;
+                });
+
+                if (matchingItems.length === 0) return;
+
+                totalMatches += matchingItems.length;
+
+                // Render Section for Row
+                html += `
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between border-b border-cream-300/80 pb-3">
+                            <div class="flex items-center space-x-3">
+                                <span class="px-3.5 py-1 rounded-2xl text-xs font-extrabold uppercase tracking-wider border shadow-sm ${row.badgeColor}">
+                                    ${row.rowName}
+                                </span>
+                                <span class="text-xs text-cream-800/60 font-semibold">${matchingItems.length} Characters</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+                `;
+
+                matchingItems.forEach(item => {
+                    const isFav = favorites.includes(item.char);
+                    
+                    // Vision Mode Text Manipulations
+                    let displayChar = item.char;
+                    let displayRomaji = item.romaji;
+                    let displayBn = item.bn;
+
+                    if (visionMode === 1) {
+                        displayRomaji = "???";
+                        displayBn = "???";
+                    } else if (visionMode === 2) {
+                        displayChar = "❓";
+                    }
+
+                    html += `
+                        <div class="card-perspective h-72 sm:h-80 cursor-pointer" onclick="flipCard(this)">
+                            <div class="card-inner relative w-full h-full">
+                                
+                                <!-- CARD FRONT (Vivid Yellow with Colorful Letter) -->
+                                <div class="card-front absolute inset-0 rounded-3xl bg-gradient-to-br from-amber-100 via-yellow-200 to-amber-300/80 border-2 border-amber-300 p-4 sm:p-5 flex flex-col justify-between shadow-md hover:shadow-xl hover:border-amber-400 transition-all glass-card">
+                                    
+                                    <!-- Top Actions -->
+                                    <div class="flex items-center justify-between z-10">
+                                        <button onclick="downloadCardImage(${JSON.stringify(item).replace(/"/g, '&quot;')}, event)" 
+                                            title="Download PNG Card" 
+                                            class="w-8 h-8 rounded-xl bg-white/80 hover:bg-white text-amber-800 flex items-center justify-center text-xs transition-all shadow-sm border border-amber-300/60">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+
+                                        <button onclick="toggleFavorite('${item.char}', event)" 
+                                            title="Favorite Card" 
+                                            class="w-8 h-8 rounded-xl ${isFav ? 'bg-rose-500 text-white' : 'bg-white/80 text-cream-400 hover:text-rose-500'} flex items-center justify-center text-xs transition-all shadow-sm border border-amber-300/60">
+                                            <i class="${isFav ? 'fas' : 'far'} fa-heart"></i>
+                                        </button>
+                                    </div>
+
+                                    <!-- Center Character Block with vibrant individual letter color -->
+                                    <div class="text-center my-auto py-2">
+                                        <div class="japanese-char text-6xl sm:text-7xl font-extrabold ${item.charColor} leading-none mb-1 transition-transform hover:scale-105">
+                                            ${displayChar}
+                                        </div>
+                                        <div class="text-sm sm:text-base font-extrabold text-amber-950 uppercase tracking-wide">
+                                            ${displayRomaji}
+                                        </div>
+                                        <div class="bengali-font text-xs sm:text-sm font-semibold text-amber-800 mt-0.5">
+                                            ${displayBn}
+                                        </div>
+                                    </div>
+
+                                    <!-- Bottom Audio Speaker Control -->
+                                    <div class="flex items-center justify-between pt-2 border-t border-amber-400/40">
+                                        <button onclick="event.stopPropagation(); speakJapanese('${item.char}')" 
+                                            class="w-full py-2 bg-white/90 hover:bg-white rounded-xl text-amber-900 font-bold text-xs flex items-center justify-center space-x-2 shadow-sm border border-amber-300/80 transition-all hover:scale-[1.02]">
+                                            <i class="fas fa-volume-high text-amber-600"></i>
+                                            <span>Listen</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- CARD BACK (Detailed Information) -->
+                                <div class="card-back absolute inset-0 rounded-3xl bg-amber-50 border-2 border-amber-300 p-4 sm:p-5 flex flex-col justify-between shadow-md text-amber-950">
+                                    
+                                    <div class="flex items-center justify-between border-b border-amber-200/80 pb-2">
+                                        <span class="text-xs font-bold text-amber-900 uppercase">Card Details</span>
+                                        <span class="japanese-char text-xl font-bold ${item.charColor}">${item.char}</span>
+                                    </div>
+
+                                    <div class="space-y-3 my-auto">
+                                        <div>
+                                            <div class="text-[10px] font-bold uppercase tracking-wider text-amber-800/80">Pronunciation Guide</div>
+                                            <div class="text-xs font-semibold text-amber-950 mt-0.5 bg-amber-100/70 p-2 rounded-xl border border-amber-200">${item.sound}</div>
+                                        </div>
+
+                                        <div>
+                                            <div class="text-[10px] font-bold uppercase tracking-wider text-amber-800/80">Example Word</div>
+                                            <div class="bg-amber-100/70 p-2 rounded-xl border border-amber-200 mt-0.5">
+                                                <div class="flex items-center justify-between">
+                                                    <span class="japanese-char text-base font-bold text-amber-950">${item.sample}</span>
+                                                    <span class="text-xs font-bold text-amber-800">${item.sampleRomaji}</span>
+                                                </div>
+                                                <div class="text-[11px] font-semibold text-emerald-700 mt-1">${item.sampleMeaning}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button onclick="event.stopPropagation(); speakJapanese('${item.sample}')" 
+                                        class="w-full py-2 bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold text-xs rounded-xl flex items-center justify-center space-x-2 transition-all shadow-sm">
+                                        <i class="fas fa-volume-high"></i>
+                                        <span>Say Word (${item.sample})</span>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (totalMatches === 0) {
+                container.innerHTML = '';
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+                container.innerHTML = html;
+            }
+        }
+
+        // Live Search Input Listener
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            const clearBtn = document.getElementById('clear-search');
+            if (searchQuery.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+            render();
+        });
+
+        function clearSearch() {
+            searchQuery = '';
+            document.getElementById('search-input').value = '';
+            document.getElementById('clear-search').classList.add('hidden');
+            render();
+        }
+
+        // App Initialization
+        window.onload = function() {
+            updateFavBadges();
+            renderFilterTabs();
+            render();
+        };
+    </script>
+</body>
+</html>
